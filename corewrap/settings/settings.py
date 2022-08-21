@@ -43,25 +43,46 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-
     # my apps
 
     "account",
-    
+
     # 3rd party
-    
-    "rest_framework"
+
+    "corsheaders",
+
+    "rest_framework",
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+
+    "corsheaders.middleware.CorsMiddleware", # new
+    "django.middleware.common.CommonMiddleware",
+
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "corsheaders.middleware.CorsPostCsrfMiddleware", # new
+
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8080",
+#     # "http://127.0.0.1:8000",
+# ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:3000",  # this is the url from react server
+
+]
+
 
 ROOT_URLCONF = 'corewrap.urls'
 
@@ -133,3 +154,12 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "account.BaseUserModel"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+EMAIL_HOST = operator.retrieve_confidant("EMAIL_HOST")
+EMAIL_PORT = operator.retrieve_confidant("EMAIL_PORT")
+EMAIL_USE_TLS = operator.retrieve_confidant("EMAIL_USE_TLS")
+EMAIL_HOST_USER = operator.retrieve_confidant("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = operator.retrieve_confidant("EMAIL_HOST_PASSWORD")

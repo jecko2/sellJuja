@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-
+from rest_framework_simplejwt.serializers import TokenObtainSerializer
 from account.models import BaseUserModel
 
 
@@ -19,3 +19,4 @@ class BaseUserSerializer(ModelSerializer):
             instance.set_password(password)
             instance.save()
         return instance
+
